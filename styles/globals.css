@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: 'Recoleta';
+    src: url('/fonts/Recoleta-Semibold.woff2') format('woff2'),
+         url('/fonts/Recoleta-Semibold.woff') format('woff'),
+         url('/fonts/Recoleta-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+  }
+  input::placeholder {
+    color: black;
+  }
+  
