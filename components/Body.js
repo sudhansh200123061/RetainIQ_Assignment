@@ -11,21 +11,21 @@ import Variants from './Variants.js'
 const initialRows = [
   {
     id: 1,
-    filter: 'Anarkali Kurtas',
+    filter: ['Anarkali Kurtas'],
     'Primary Variant': ['/img1.jpeg' ,'Anniversary Sale'],
     'Variant 2': ['/img2.jpeg' ,'2 image - zero discount'],
     'Variant 3': ['/img3.jpeg' ,'Multi Image - fallback']
   },
   {
     id: 2,
-    filter: 'pekka',
+    filter: ['pekka','Golem','The Knight', 'The King','the dragon'],
     'Primary Variant': ['/img1.jpeg' ,'Single image product'],
     'Variant 2': ['/img2.jpeg' ,'4 image - zero discount'],
     'Variant 3': ['/img3.jpeg' ,'Multi Image - No Tag']
   },
   {
     id: 3,
-    filter: 'king',
+    filter: ['king'],
     'Primary Variant': ['/img1.jpeg' ,'Single e product'],
     'Variant 2': ['/img2.jpeg' ,'4 image - zero discount'],
     'Variant 3': ['/img3.jpeg' ,'Multi Image - No Tag']
@@ -38,8 +38,19 @@ function Body() {
   const [loading, setLoading] = useState(false);
   const [visibleDropdownColumn, setVisibleDropdownColumn] = useState(null);
 
+
+  const handleInsert = (rowId, columnKey, newVariant) => {
+    setRows((prevRows) =>
+      prevRows.map(row => 
+        row.id === rowId 
+        ? { ...row, [columnKey]: newVariant }
+        : row
+      )
+    );
+  };
+
   const SortableRow = ({ id, children }) => {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id, handle: '.drag-handle' });
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id, handle: '.drag-handle' });
 
     const style = {
       transform: CSS.Transform.toString(transform),
@@ -70,10 +81,10 @@ function Body() {
       if (key === 'id') {
         acc[key] = newId;
       } else if(key == 'filter'){
-        acc[key] = key; // or any default value you want to set
+        acc[key] = []; // or any default value you want to set
       }
       else {
-        acc[key] = ['/img3.jpeg' ,'Multi Image - fallback'];
+        acc[key] = [];
       }
       return acc;
     }, {});
@@ -86,11 +97,11 @@ function Body() {
 
   const addColumn = () => {
     setLoading(true);
-    const newCol = `Variant ${Object.keys(rows[0]).length - 1 + 1}`;
+    const newCol = `Variant ${Object.keys(rows[0]).length - 1}`;
 
     const updatedRows = rows.map(row => ({
       ...row,
-      [newCol]: ['/img3.jpeg' ,'Multi Image - fallback'],
+      [newCol]: [],
     }));
 
     setTimeout(() => {
@@ -152,7 +163,7 @@ function Body() {
       <SortableContext items={rows.map(row => row.id.toString())} strategy={rectSortingStrategy}>
         <div className='bg-gray-50 border-gray-300 border-[1px] mx-3 mt-[120px] overflow-x-clip'>
           <div className='flex'>
-            <div className='w-[550px] sticky left-20 bg-gray-50 z-10'>
+          <div className={`w-[550px] ${Object.keys(rows[0]).length > 5 ? 'sticky' : ''} left-20 bg-gray-50 z-10`}>
               <div className='flex mt-3 mb-3 ml-10 items-center'>
                 <div className='border-gray-300 border-r-[1px] font-bold text-gray-400 ml-[60px] flex justify-center w-[450px]'>Product Filter</div>
               </div>
@@ -180,7 +191,7 @@ function Body() {
                     </div>
 
                     <div className='border-gray-300 border-r-[1px] flex justify-center h-52 items-center w-[430px]'>
-                      <div className='border-gray-400 border-[2px] border-dotted w-[370px] ml-3 h-40 rounded-sm'>
+                      <div className='border-gray-400 border-[2px] border-dotted w-[370px] ml-3 h-40 rounded-sm flex justify-center items-center'>
                         <ProductFilter filter={row.filter}/>
                       </div>
                     </div>
@@ -251,9 +262,9 @@ function Body() {
                         index > 1 && (
                           <div key={key} className='flex items-center h-60'>
                             <div className='border-gray-300 border-r-[1px] flex justify-center h-52 items-center w-[245px]'>
-                              <div className='border-gray-400 border-[2px] border-dotted w-[190px] ml-3 h-40 rounded-sm'>
+                              <div className='border-gray-400 border-[2px] border-dotted w-[190px] ml-3 h-40 rounded-sm flex justify-center items-center'>
                                 
-                                <Variants img={row[key][0]} text={row[key][1]} />
+                                <Variants className='' val={row[key]} onInsert={(newVariant) => handleInsert(row.id, key, newVariant)}/>
                               </div>
                             </div>
                           </div>
