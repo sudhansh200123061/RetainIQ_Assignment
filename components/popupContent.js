@@ -99,10 +99,10 @@ function popupContent({onInsert}) {
 
         </div>
         <div className='h-full bg-white pt-4 pl-4 pr-4 flex flex-wrap gap-2 overflow-scroll'>
-            {data.map(row=>(               
-                <div className='flex flex-col justify-between items-center'>
+            {data.map((row,index)=>(               
+                <div key={index} className='flex flex-col justify-between items-center'>
                     <div className='relative w-[132] h-[30px]px mt-4'>
-                        <Image src={row.img} width={132} height={20} className='rounded-md'/>
+                        <Image src={row.img} width={132} height={20} alt='' className='rounded-md'/>
                         <div className='absolute inset-0 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300'>
                             <button onClick={() => handleInsertClick([row.img, row.txt])} className=' text-black bg-white text-sm rounded-md h-[40px] text-center p-2'>
                                 Insert

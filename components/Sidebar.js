@@ -7,7 +7,7 @@ function Sidebar() {
     <div className="h-full min-w-[80px] bg-neutral-950 fixed flex flex-col justify-between z-50">
         <div className='flex flex-col items-center'>
           <button className='pt-5 '>
-            <Image src="/complogo.png" width={55} height={55}/>
+            <Image src="/complogo.png" alt='' width={55} height={55}/>
           </button>
           <button className='pt-7 '>
             <Image src="/zap.svg" alt="My Icon" width={25} height={25}  className=''/>

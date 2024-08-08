@@ -24,7 +24,7 @@ function Variants({val, onInsert}) {
         val.length ? (
             <div className='flex flex-col justify-between items-center'>
               <div className='w-[160] h-[30px]px mt-2'>
-                <Image src={val[0]} width={160} height={30} className='rounded-md'/>
+                <Image src={val[0]} width={160} height={30} alt='' className='rounded-md'/>
               </div>
               <span className='mt-1 w-[160px] overflow-hidden text-ellipsis whitespace-nowrap text-center'>{val[1]}</span>
             </div>
@@ -48,7 +48,7 @@ function Variants({val, onInsert}) {
                   <XIcon onClick={closeModal} className='absolute cursor-pointer h-6 w-6 top-4 right-4  rounded z-50'/>
                 
                   <PopupContent onInsert={handleInsert}/>
-                  hi
+                 
                 </div>
               </Modal>
 
