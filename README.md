@@ -9,7 +9,8 @@ pnpm dev
 # or
 bun dev
 ```
-
-Delete row and add column by double click
-delete Column by clicking on three dots on column
-Add row just by single click
+````
+double click : Delete row and add column 
+delete Column : by clicking on three dots on column
+Add row just by single click on + icon
+````
